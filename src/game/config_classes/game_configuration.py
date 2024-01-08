@@ -11,10 +11,10 @@ class player_config:
 @dataclass
 class game_config:
     """Stores configuration data for an instance of the game
-    """    
+    """
     # general configuration
     num_players: int
-    
+
     # one player config per player
     player_configs: list[player_config]
     
