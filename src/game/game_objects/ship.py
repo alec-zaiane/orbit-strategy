@@ -5,8 +5,17 @@ class ship(physics_object):
     def __init__(self, 
                  config:ship_config, 
                  initial_position:vector2, 
-                 initial_velocity:vector2
+                 initial_velocity:vector2,
+                 owned_by:int
                  ):
+        """Ship class
+
+        Args:
+            config (ship_config): config for this ship
+            initial_position (vector2): initial position
+            initial_velocity (vector2): initial velocity
+            owned_by (int): player ID of who owns this ship
+        """        
         super().__init__(
             position=initial_position,
             velocity=initial_velocity,
@@ -19,3 +28,4 @@ class ship(physics_object):
         self.config = config
         self.position = initial_position
         self.velocity = initial_velocity
+        self.owned_by = owned_by

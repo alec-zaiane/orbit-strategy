@@ -41,11 +41,12 @@ class game:
                     random.uniform(-random_offset_range, random_offset_range),
                     random.uniform(-random_offset_range, random_offset_range)
                 )
-                newplayer.ships.append(
+                newplayer.add_ship(
                     game_objects.ship(
                         config=ship_config,
                         initial_position=around_location + random_offset,
-                        initial_velocity=start_velocity
+                        initial_velocity=start_velocity,
+                        owned_by=newplayer.id
                     )
                 )
             self.players.append(newplayer)
