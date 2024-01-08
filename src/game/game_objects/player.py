@@ -8,7 +8,8 @@ class player:
         self.ships:list[ship] = []
 
     def add_ship(self, ship_to_add:ship):
-        """adds a ship to the player's fleet, also subtracts the cost of the ship from the player's budget
+        """adds a ship to the player's fleet,
+        also subtracts the cost of the ship from the player's budget
 
         Args:
             ship_to_add (ship): ship to add

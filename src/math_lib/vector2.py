@@ -1,3 +1,4 @@
+"""Holds a 2d vector class"""
 from __future__ import annotations
 import math
 

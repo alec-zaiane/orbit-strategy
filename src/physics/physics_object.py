@@ -7,7 +7,10 @@ class collider:
     def __init__(self, radius:float):
         self.radius = radius
         
-    def check_collision(self, other:collider, self_transform:tuple[vector2, float], other_transform:tuple[vector2, float]) -> bool:
+    def check_collision(self, 
+                        other:collider,
+                        self_transform:tuple[vector2, float],
+                        other_transform:tuple[vector2, float]) -> bool:
         """Check if this collider is colliding with another collider
 
         Args:
@@ -19,20 +22,26 @@ class collider:
             bool: whether their colliders are overlapping
         """
         if not type(self) == collider:
-            raise TypeError("self must be a collider, likely that a child class did not override check_collision")
+            raise TypeError("self must be a collider, "+
+                            "likely that a child class did not override check_collision")
         if not (self_transform[0] - other_transform[0]).length < (self.radius + other.radius):
-            # shortcut, if the distance between the two colliders is greater than the sum of their radii, they can't be colliding
+            # shortcut, if the distance between the two colliders is greater 
+            #   than the sum of their radii, they can't be colliding
             return False
         if isinstance(other, rect_collider):
-            # if the other one is a rectangular collider, we need to check if we're colliding with any of its edges, including rotation :(
+            # if the other one is a rectangular collider, 
+            # we need to check if we're colliding with any of its edges, including rotation :(
             # first, unrotate the circle with respect to the rotated rectangle
             if other_transform[1] != 0:
                 # other is rotated, so we need to unrotate the circle with respect to the rectangle
-                # also, center all coordinates around the rectangle's center to make the math easier
-                unrotated_circle_pos = (self_transform[0] - other_transform[0])
+                # also, center all coordinates around the
+                #   rectangle's center to make the math easier
+                unrotated_circle_pos = self_transform[0] - other_transform[0]
                 unrotated_circle_pos.rotate_rad(-other_transform[1])
                 # now, check if the unrotated circle is colliding with the unrotated rectangle
-                return self.check_collision(rect_collider(other.width, other.height), (unrotated_circle_pos, 0), (vector2(0, 0), 0))      
+                return self.check_collision(rect_collider(other.width, other.height), 
+                                            (unrotated_circle_pos, 0), 
+                                            (vector2(0, 0), 0))      
             else:
                 # other is not rotated :)
                 # check AABB first
@@ -76,7 +85,8 @@ class rect_collider(collider):
         Returns:
             tuple[rect_collider, vector2]: a new collider and its position
         """
-        # position doesn't really matter, we just need to find a new width and height based on the rotation
+        # position doesn't really matter,
+        #   we just need to find a new width and height based on the rotation
         four_corers = [
             vector2(self.width / 2, self.height / 2),
             vector2(self.width / 2, -self.height / 2),
@@ -97,7 +107,10 @@ class rect_collider(collider):
         
         
     
-    def check_collision(self, other:collider, self_transform:tuple[vector2, float], other_transform:tuple[vector2, float]) -> bool:
+    def check_collision(self,
+                        other:collider, 
+                        self_transform:tuple[vector2, float], 
+                        other_transform:tuple[vector2, float]) -> bool:
         """Check if this collider is colliding with another collider
 
         Args:

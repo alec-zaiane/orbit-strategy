@@ -56,8 +56,10 @@ class ship_config:
         # max rotation speed should be relatively expensive, and scale exponentially
         cost += math.pow(self.max_rotation_speed, 1.5) * 1e3
         # it should also be weighed against the longest side of the ship,
-        # sort of a "tensile strength cost", the faster it spins, and the longer it is, the more expensive it is
-        cost += math.pow(self.max_rotation_speed, 1.5) * math.pow(max(self.width, self.length), 1.5) * 1e3
+        # sort of a "tensile strength cost", 
+        # the faster it spins and longer it is, the more expensive it is
+        cost += math.pow(self.max_rotation_speed, 1.5) \
+             * math.pow(max(self.width, self.length), 1.5) * 1e3
         # a larger ship should be more expensive
         cost += self.width * self.length / 1e3
         

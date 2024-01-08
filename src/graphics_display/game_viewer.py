@@ -41,7 +41,8 @@ class game_viewer:
                           view_whole_world:bool =False, 
                           padding_percent:float = 0.2, 
                           smoothness:float = 0.9):
-        """Find an optimal camera scale and offset for the current game state, updates self._camera to match
+        """Find an optimal camera scale and offset for the current game state,
+        updates self._camera to match
 
         Args:
             view_whole_world (bool, optional): whether to view the whole game world. Defaults to False.
@@ -62,8 +63,10 @@ class game_viewer:
                 return True
             return False
         
-        desired_objects = [obj for obj in self.game.game_world.physics_objects if filter_objects(obj)]
-        if view_whole_world or len(desired_objects) == 0: # if there's nothing, just show the whole world
+        desired_objects = [obj for obj in self.game.game_world.physics_objects \
+                            if filter_objects(obj)]
+        if view_whole_world or len(desired_objects) == 0: 
+            # if there's nothing, just show the whole world
             minx = -self.game.game_world.world_size / 2
             maxx = self.game.game_world.world_size / 2
             miny = -self.game.game_world.world_size / 2

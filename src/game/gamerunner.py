@@ -1,9 +1,9 @@
 """`game` object actually handles running the game loop and holds the game state."""
 import random
 import math
+from math_lib.vector2 import vector2
 from .config_classes.game_configuration import game_config
 from .game_world import game_world
-from math_lib.vector2 import vector2
 from . import game_objects
 
 class game:
