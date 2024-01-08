@@ -20,9 +20,9 @@ class game_viewer:
         self.screen = pygame.surface.Surface(screen_size)
         
         #camera parameters
-        self._camera:tuple[float,tuple[float,float]] = (1.0, (0.0, 0.0)) # (scale, (x_offset, y_offset))
-        # "Camera" is sort of inverted, as in, objects coordinates should be 
-        # multiplied by the scale and then offset by the offset in order to get their position on the screen
+        self._camera:tuple[float,tuple[float,float]] = (1.0, (0.0, 0.0)) 
+        # ^ (scale, (x_offset, y_offset))
+        # "Camera" is sort of inverted, as in object are offset and scaled by the `camera`
         
         # find random-ish colours for the players
         # white is reserved for non-player things
@@ -34,9 +34,13 @@ class game_viewer:
             (128,255,128),
             (255,128,128)
         ]
-        assert len(self.game.players) < len(self.playercols), "Not enough playercolours, maybe make it generated now instead of hardcoded"
+        assert len(self.game.players) < len(self.playercols), \
+            "Not enough playercolours, maybe make it generated now instead of hardcoded"
         
-    def find_scale_offset(self, view_whole_world:bool =False, padding_percent:float = 0.2, smoothness:float = 0.9):
+    def find_scale_offset(self, 
+                          view_whole_world:bool =False, 
+                          padding_percent:float = 0.2, 
+                          smoothness:float = 0.9):
         """Find an optimal camera scale and offset for the current game state, updates self._camera to match
 
         Args:

@@ -1,7 +1,9 @@
+"""A ship in the game"""
 from game.config_classes import ship_config
 from math_lib.vector2 import vector2
 from physics.physics_object import physics_object, rect_collider
 class ship(physics_object):
+    """A ship in the game"""    
     def __init__(self, 
                  config:ship_config, 
                  initial_position:vector2, 

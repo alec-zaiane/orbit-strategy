@@ -1,20 +1,22 @@
+"""`game` object actually handles running the game loop and holds the game state."""
+import random
+import math
 from .config_classes.game_configuration import game_config
 from .game_world import game_world
 from math_lib.vector2 import vector2
 from . import game_objects
-import random, math
 
 class game:
     """A class to hold the game state and process the game loop
     """    
-    def __init__(self, game_config: game_config):
-        self.game_config = game_config
+    def __init__(self, game_configuration: game_config):
+        self.game_config = game_configuration
         # setup the game world
         self.game_world = game_world(
-            world_size=game_config.world_radius,
-            asteroid_amount=game_config.asteroid_amount,
-            asteroid_size_mean=game_config.asteroid_size_mean,
-            asteroid_size_stddev=game_config.asteroid_size_stddev,
+            world_size=game_configuration.world_radius,
+            asteroid_amount=game_configuration.asteroid_amount,
+            asteroid_size_mean=game_configuration.asteroid_size_mean,
+            asteroid_size_stddev=game_configuration.asteroid_size_stddev,
         )
         # setup the players
         assert len(game_config.player_configs) == game_config.num_players

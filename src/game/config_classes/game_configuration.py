@@ -1,8 +1,11 @@
+"""Player and Game configuration classes"""
 from dataclasses import dataclass
 from game.config_classes.ship_configuration import ship_config
 
 @dataclass
 class player_config:
+    """Configuration of a player
+    """    
     initial_direction: float # radians
     initial_velocity: float # m/s
     budget: int

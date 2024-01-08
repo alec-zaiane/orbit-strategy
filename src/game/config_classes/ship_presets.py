@@ -1,6 +1,8 @@
+"""A few preset ship configurations, these may be deleted later"""
 from . import ship_config
 
 def large_ship():
+    """Very large, very expensive ship"""
     return ship_config(
         mass=1e7, # kilograms, converts to 10,000 metric tons
         rotation_acceleration=1e-6, # radians per second squared
@@ -18,6 +20,7 @@ def large_ship():
     )
     
 def small_ship():
+    """Small-ish ship"""
     return ship_config(
         mass = 5e4, # kilograms, converts to 50 metric tons
         rotation_acceleration=1e-1, # radians per second squared
@@ -35,6 +38,7 @@ def small_ship():
     )
     
 def tiny_drone():
+    """A tiny drone with high turn rate"""
     return ship_config(
         mass = 5e2, # kilograms, converts to 500 kg
         rotation_acceleration=1, # radians per second squared

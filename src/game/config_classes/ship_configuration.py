@@ -1,3 +1,4 @@
+"""Configuration classes for ships and ship modules"""
 import math
 from dataclasses import dataclass
 @dataclass
@@ -10,7 +11,8 @@ class ship_config:
     rotation_acceleration:float = 1e-3
     '''how fast the ship can accelerate its rotation in radians per second squared'''
     max_rotation_speed:float = 1e-1
-    '''maximum rotation speed in radians per second, this is a cap due to g-forces or something similar'''
+    '''maximum rotation speed in radians per second, 
+    this is a cap due to g-forces or something similar'''
     width:float = 1e2
     '''width of the ship in meters'''
     length:float = 1e2
@@ -35,10 +37,12 @@ class ship_config:
     '''how much heat the ship can store before it starts taking damage, in arbitrary units'''
     
     module_capacity:float = 100
-    '''how many points worth of modules the ship can hold, each module has a cost proportional to its use/efficiency'''
+    '''how many points worth of modules the ship can hold,
+    each module has a cost proportional to its use/efficiency'''
         
     def get_ship_cost(self) -> float:
-        """returns the 'cost' of the ship, in arbitrary units based on all of the properties, module cost must be added separately
+        """returns the 'cost' of the ship, in arbitrary units based on all of the properties, 
+        module cost must be added separately
 
         Returns:
             float: the cost of the ship, in arbitrary units
@@ -51,7 +55,8 @@ class ship_config:
         cost += math.pow(self.rotation_acceleration, 1.5) * 1e3
         # max rotation speed should be relatively expensive, and scale exponentially
         cost += math.pow(self.max_rotation_speed, 1.5) * 1e3
-        # it should also be weighed against the longest side of the ship, sort of a "tensile strength cost", the faster it spins, and the longer it is, the more expensive it is
+        # it should also be weighed against the longest side of the ship,
+        # sort of a "tensile strength cost", the faster it spins, and the longer it is, the more expensive it is
         cost += math.pow(self.max_rotation_speed, 1.5) * math.pow(max(self.width, self.length), 1.5) * 1e3
         # a larger ship should be more expensive
         cost += self.width * self.length / 1e3
@@ -59,7 +64,8 @@ class ship_config:
         # thruster properties
         # forward thrust shouldn't be too expensive, but should scale exponentially
         cost += math.pow(self.forward_thrust, 1.2) / 10
-        # backward thrust should be more expensive than forward thrust (otherwise, driving the ship backwards is cheaper)
+        # backward thrust should be more expensive than forward thrust 
+        # (otherwise, driving the ship backwards is cheaper)
         cost += math.pow(self.backward_thrust, 1.4) / 5
         # strafe thrust should be even more expensive than backward thrust
         cost += math.pow(self.right_strafe_thrust, 1.6) / 2

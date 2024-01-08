@@ -1,9 +1,8 @@
-from physics.physics_object import physics_object, collider
-from math_lib.vector2 import vector2
+"""The game world holds all the physics objects and simulates them"""
 import math
 import random
-
-gravity_force_cap = 1000 # newtons
+from physics.physics_object import physics_object, collider
+from math_lib.vector2 import vector2
 
 class game_world:
     """Holds the game world and any physics objects to simulate
