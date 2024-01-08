@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from config_classes.ship_configuration import ship_config
+from game.config_classes.ship_configuration import ship_config
 
 @dataclass
 class player_config:

@@ -54,4 +54,3 @@ class game:
         for player in self.players:
             for ship in player.ships:
                 self.game_world.physics_objects.append(ship)
-            
