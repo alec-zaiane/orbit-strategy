@@ -18,7 +18,7 @@ def large_ship():
         heat_capacity=1e5,
         module_capacity = 1e5
     )
-    
+
 def small_ship():
     """Small-ish ship"""
     return ship_config(
@@ -36,7 +36,7 @@ def small_ship():
         heat_capacity=100,
         module_capacity = 70,
     )
-    
+
 def tiny_drone():
     """A tiny drone with high turn rate"""
     return ship_config(

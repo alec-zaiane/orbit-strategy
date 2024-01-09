@@ -4,9 +4,9 @@ import random
 from physics.physics_object import physics_object, collider
 from math_lib.vector2 import vector2
 
-class game_world:
+class game_world: # pylint: disable=too-few-public-methods
     """Holds the game world and any physics objects to simulate
-    """    
+    """
     def __init__(self,
                  world_size: float,
                  asteroid_amount: int,
@@ -42,8 +42,8 @@ class game_world:
                 position=position,
                 velocity=velocity,
                 mass=math.pi * math.pow(size, 2),
-                collider=collider(
+                phys_collider=collider(
                     radius=size
                 )
-            )        
+            )
         )

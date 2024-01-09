@@ -5,7 +5,7 @@ from game.config_classes.ship_configuration import ship_config
 @dataclass
 class player_config:
     """Configuration of a player
-    """    
+    """
     initial_direction: float # radians
     initial_velocity: float # m/s
     budget: int
@@ -20,7 +20,7 @@ class game_config:
 
     # one player config per player
     player_configs: list[player_config]
-    
+
     # world generation configuration
     world_radius: float
     asteroid_amount: int

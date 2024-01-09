@@ -1,6 +1,6 @@
 '''main runner for the game and all training'''
-import pygame
 import sys
+import pygame
 from game import config_classes
 from game.gamerunner import game
 from graphics_display.game_viewer import game_viewer
@@ -44,15 +44,14 @@ if __name__ == "__main__":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-        
+
         # update game
         #game_instance.update(time_delta=0.001)
-        
+
         # draw game
         screen.fill((0, 0, 0))
         viewer.find_scale_offset(padding_percent=100)
         viewer.render_to_self()
         screen.blit(viewer.screen,(0,0))
         #print(viewer._camera)
-        
         pygame.display.flip()

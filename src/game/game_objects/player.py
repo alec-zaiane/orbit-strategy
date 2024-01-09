@@ -1,6 +1,6 @@
 """A player in the game, most likely a computer playing"""
 from game.game_objects.ship import ship
-class player:
+class player: # pylint: disable=too-few-public-methods
     """A player in the game, most likely a computer playing"""
     def __init__(self, player_id:int, budget:int):
         self.id = player_id
@@ -13,6 +13,6 @@ class player:
 
         Args:
             ship_to_add (ship): ship to add
-        """        
+        """
         self.ships.append(ship_to_add)
         self.budget -= ship_to_add.config.get_ship_cost()

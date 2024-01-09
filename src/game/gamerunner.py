@@ -6,9 +6,9 @@ from .config_classes.game_configuration import game_config
 from .game_world import game_world
 from . import game_objects
 
-class game:
+class game: # pylint: disable=too-few-public-methods
     """A class to hold the game state and process the game loop
-    """    
+    """
     def __init__(self, game_configuration: game_config):
         self.game_config = game_configuration
         # setup the game world
@@ -30,9 +30,9 @@ class game:
                 math.cos(player_config.initial_direction),
                 math.sin(player_config.initial_direction)
             ) * game_config.world_radius * 0.9
-            
+
             random_offset_range = game_config.world_radius * 0.1
-            
+
             start_velocity = vector2(
                 math.cos(player_config.initial_direction + math.pi / 2),
                 math.sin(player_config.initial_direction + math.pi / 2)
@@ -52,7 +52,7 @@ class game:
                     )
                 )
             self.players.append(newplayer)
-        
+
         # add the players to the game world
         for player in self.players:
             for ship in player.ships:
