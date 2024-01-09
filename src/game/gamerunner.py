@@ -19,9 +19,9 @@ class game: # pylint: disable=too-few-public-methods
             asteroid_size_stddev=game_configuration.asteroid_size_stddev,
         )
         # setup the players
-        assert len(game_config.player_configs) == game_config.num_players
+        assert len(game_configuration.player_configs) == game_configuration.num_players
         self.players:list[game_objects.player] = []
-        for i, player_config in enumerate(game_config.player_configs):
+        for i, player_config in enumerate(game_configuration.player_configs):
             newplayer = game_objects.player(
                      player_id = i,
                      budget=player_config.budget,
@@ -29,9 +29,9 @@ class game: # pylint: disable=too-few-public-methods
             around_location = vector2(
                 math.cos(player_config.initial_direction),
                 math.sin(player_config.initial_direction)
-            ) * game_config.world_radius * 0.9
+            ) * game_configuration.world_radius * 0.9
 
-            random_offset_range = game_config.world_radius * 0.1
+            random_offset_range = game_configuration.world_radius * 0.1
 
             start_velocity = vector2(
                 math.cos(player_config.initial_direction + math.pi / 2),
