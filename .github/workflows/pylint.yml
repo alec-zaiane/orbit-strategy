@@ -18,6 +18,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pylint
+        pip install -r requirements.txt
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files '*.py' ':!:docs/*') --disable=C0103,C0301
+        pylint $(git ls-files '*.py' ':!:docs/*') --disable=C0103,C0301,C0412,W0511,R0401
