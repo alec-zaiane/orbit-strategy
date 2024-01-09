@@ -1,4 +1,5 @@
 """Class to display the game state on a pygame surface"""
+from typing import Callable
 import pygame
 import pygame.gfxdraw
 from game.gamerunner import game
@@ -38,69 +39,74 @@ class game_viewer:
         assert len(self.game.players) < len(self.playercols), \
             "Not enough playercolours, maybe make it generated now instead of hardcoded"
 
+    def _find_bounding_box(self, obj_filter:Callable[[physics_object],bool]) -> tuple[float,float,float,float]:
+        """Find the bounding box of all objects in the game world that pass the filter
+
+        Args:
+            obj_filter (Callable[[physics_object],bool]): Function that takes a physics_object and returns whether it should be considered in the bounding box calculation
+
+        Returns:
+            tuple[float,float,float,float]: (minx, maxx, miny, maxy) of the bounding box, or (0,0,0,0) if there are no objects
+        """
+        objects_of_interest = list(filter(obj_filter, self.game.game_world.physics_objects))
+        if len(objects_of_interest) == 0:
+            return (0,0,0,0)
+        minx = min(obj.position.x for obj in objects_of_interest)
+        maxx = max(obj.position.x for obj in objects_of_interest)
+        miny = min(obj.position.y for obj in objects_of_interest)
+        maxy = max(obj.position.y for obj in objects_of_interest)
+        return (minx, maxx, miny, maxy)
+
     def find_scale_offset(self,                 # pylint: disable=too-many-locals
                           view_whole_world:bool =False,
-                          padding_percent:float = 0.2,
+                          padding_percent:float = 20,
                           smoothness:float = 0.9):
         """Find an optimal camera scale and offset for the current game state,
         updates self._camera to match
 
         Args:
             view_whole_world (bool, optional): whether to view the whole game world. Defaults to False.
-            padding_percent (float, optional): add this percent of the screen as blank space on either side of the active area. Defaults to 0.2.
+            padding_percent (float, optional): add this percent of the screen as blank space on either side of the active area. Defaults to 20%.
             smoothness (float, optional): how much to smooth the camera movement, **must** be <1 Defaults to 0.9.
         """
         # find the bounding box of all objects, then find the scale and offset to fit that box on the screen
+        padding_percent /= 100 # convert to decimal
         def filter_objects(obj:physics_object) -> bool:
-            """return true if and only if this object should be considered in the camera calculation
-
-            Args:
-                obj (physics_object): object to be checked for consideration
-
-            Returns:
-                bool: whether it should influence the camera
-            """
+            """return true if and only if this object should be considered in the camera calculation"""
             if isinstance(obj, ship):
                 return True
             return False
+        if view_whole_world:
+            bounding_box = (
+                (-self.game.game_world.world_size / 2)*((1+padding_percent)/2),
+                (self.game.game_world.world_size / 2)*((1+padding_percent)/2),
+                (-self.game.game_world.world_size / 2)*((1+padding_percent)/2),
+                (self.game.game_world.world_size / 2)*((1+padding_percent)/2)
+            )
+        else:
+            bounding_box = self._find_bounding_box(filter_objects)
+            bounding_box = (
+                bounding_box[0] * (1+padding_percent),
+                bounding_box[1] * (1+padding_percent),
+                bounding_box[2] * (1+padding_percent),
+                bounding_box[3] * (1+padding_percent)
+            )
+            # ^ add padding, could probably be done more efficiently
 
-        desired_objects = [obj for obj in self.game.game_world.physics_objects \
-                            if filter_objects(obj)]
-        if view_whole_world or len(desired_objects) == 0:
-            # if there's nothing, just show the whole world
-            minx = -self.game.game_world.world_size / 2
-            maxx = self.game.game_world.world_size / 2
-            miny = -self.game.game_world.world_size / 2
-            maxy = self.game.game_world.world_size / 2
-
-        minx = desired_objects[0].position.x
-        maxx = desired_objects[0].position.x
-        miny = desired_objects[0].position.y
-        maxy = desired_objects[0].position.y
-
-        for obj in desired_objects[1:]:
-            minx = min(minx, obj.position.x)
-            maxx = max(maxx, obj.position.x)
-            miny = min(miny, obj.position.y)
-            maxy = max(maxy, obj.position.y)
-
-        # now, add the padding
-        height = maxy - miny
-        width = maxx - minx
-        minx -= width * padding_percent/2
-        maxx += width * padding_percent/2
-        miny -= height * padding_percent/2
-        maxy += height * padding_percent/2
+        # now, find the scale and offset
+        minx, maxx, miny, maxy = bounding_box
+        bb_width = maxx - minx
+        bb_height = maxy - miny
 
         # find the scale and offset
         # the correct scale will make the largest dimension of the bounding box fit the screen along that dimension
         screen_width, screen_height = self.screen.get_size()
-        if height / screen_height > width / screen_width:
+        if bb_height / screen_height > bb_width / screen_width:
             # height is the limiting dimension
-            scale = screen_height / height
+            scale = screen_height / bb_height
         else:
             # width is the limiting dimension
-            scale = screen_width / width
+            scale = screen_width / bb_width
 
         # the correct offset will center the bounding box on the screen
         offset = (-(maxx + minx) / 2, -(maxy + miny) / 2)
