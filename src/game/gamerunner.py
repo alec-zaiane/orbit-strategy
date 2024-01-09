@@ -57,3 +57,11 @@ class game: # pylint: disable=too-few-public-methods
         for player in self.players:
             for ship in player.ships:
                 self.game_world.physics_objects.append(ship)
+
+    def update(self, time_delta:float):
+        """Update the game state
+
+        Args:
+            time_delta (float): time since last update
+        """
+        self.game_world.update(time_delta)

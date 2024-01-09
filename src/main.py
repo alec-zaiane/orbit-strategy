@@ -46,7 +46,7 @@ if __name__ == "__main__":
                 sys.exit()
 
         # update game
-        #game_instance.update(time_delta=0.001)
+        game_instance.update(time_delta=0.001)
 
         # draw game
         screen.fill((0, 0, 0))

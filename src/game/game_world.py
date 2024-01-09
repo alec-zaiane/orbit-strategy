@@ -47,3 +47,11 @@ class game_world: # pylint: disable=too-few-public-methods
                 )
             )
         )
+    def update(self, time_delta:float):
+        """Update the game world and all physics objects in it
+
+        Args:
+            time_delta (float): time since last update in seconds
+        """
+        for phys_obj in self.physics_objects:
+            phys_obj.update(time_delta)
