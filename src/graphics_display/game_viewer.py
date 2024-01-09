@@ -162,7 +162,7 @@ class game_viewer:
                         vector2(-obj.collider.width / 2, obj.collider.height / 2),
                     ]
                     # now rotate, scale, and offset the points
-                    for i in range(len(rect_points)):
+                    for i in range(len(rect_points)): # pylint: disable=consider-using-enumerate # because we're modifying the list
                         rect_points[i].rotate_rad(obj.rotation)
                         rect_points[i] *= self._camera[0]
                         rect_points[i] += vector2(*draw_coords)
