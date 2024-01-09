@@ -1,5 +1,6 @@
 """Class to display the game state on a pygame surface"""
 from typing import Callable
+import math
 import pygame
 import pygame.gfxdraw
 from game.gamerunner import game
@@ -144,12 +145,41 @@ class game_viewer:
                     5,
                     col_to_draw
                 )
+                # now draw a line in its pointing direction
+                pygame.draw.aaline(
+                    self.screen,
+                    col_to_draw,
+                    draw_coords,
+                    (draw_coords[0] + math.cos(obj.rotation) * 5, draw_coords[1] + math.sin(obj.rotation) * 5)
+                )
             else:
-                if isinstance(obj.collider, rect_collider) and False: # pylint: disable=condition-evals-to-constant
-                    # have to take rotation and all of that into account
-                    # which means blitting with an alpha'd surface?
-                    ...
-                    # for now just skip
+                if isinstance(obj.collider, rect_collider):
+                    # make a polygon of the coordinates, rotated by the object's rotation, then draw it
+                    rect_points = [
+                        vector2(obj.collider.width / 2, obj.collider.height / 2),
+                        vector2(obj.collider.width / 2, -obj.collider.height / 2),
+                        vector2(-obj.collider.width / 2, -obj.collider.height / 2),
+                        vector2(-obj.collider.width / 2, obj.collider.height / 2),
+                    ]
+                    # now rotate, scale, and offset the points
+                    for i in range(len(rect_points)):
+                        rect_points[i].rotate_rad(obj.rotation)
+                        rect_points[i] *= self._camera[0]
+                        rect_points[i] += vector2(*draw_coords)
+                    # now draw the polygon
+                    pygame.gfxdraw.filled_polygon( # pylint: disable=c-extension-no-member
+                        self.screen,
+                        [point.to_tuple() for point in rect_points],
+                        col_to_draw
+                    )
+                    # also draw a line in its pointing direction
+                    pygame.draw.aaline(
+                        self.screen,
+                        col_to_draw,
+                        draw_coords,
+                        (draw_coords[0] + math.cos(obj.rotation) * 5, draw_coords[1] + math.sin(obj.rotation) * 5)
+                    )
+
                 else:
                     # circle collider, much easier
                     pygame.draw.circle(

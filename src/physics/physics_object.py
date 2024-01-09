@@ -152,7 +152,7 @@ class physics_object:
         self.mass = mass
         self.position = position
         self.velocity = velocity
-        self.rotation = 0 # radians
+        self.rotation = 0.0 # radians
         self.collider = phys_collider
 
     def check_collision(self, other:physics_object) -> bool:

@@ -43,14 +43,14 @@ class game: # pylint: disable=too-few-public-methods
                     random.uniform(-random_offset_range, random_offset_range),
                     random.uniform(-random_offset_range, random_offset_range)
                 )
-                newplayer.add_ship(
-                    game_objects.ship(
+                new_ship = game_objects.ship(
                         config=ship_config,
                         initial_position=around_location + random_offset,
                         initial_velocity=start_velocity,
                         owned_by=newplayer.id
-                    )
                 )
+                new_ship.rotation = player_config.initial_direction + (math.pi / 2)
+                newplayer.ships.append(new_ship)
             self.players.append(newplayer)
 
         # add the players to the game world
