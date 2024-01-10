@@ -18,10 +18,10 @@ class game_world: # pylint: disable=too-few-public-methods
         self.asteroid_amount = asteroid_amount
         for _ in range(asteroid_amount):
             self._add_asteroid(
-                size=random.gauss(asteroid_size_mean, asteroid_size_stddev),
+                size=10, #random.gauss(asteroid_size_mean, asteroid_size_stddev),
                 position=vector2(
-                    random.uniform(-world_size, world_size),
-                    random.uniform(-world_size, world_size)
+                    random.choice([-world_size, world_size]),
+                    random.choice([-world_size, world_size])
                 ),
                 velocity=vector2(
                     random.uniform(-1, 1),

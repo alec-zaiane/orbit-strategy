@@ -12,7 +12,7 @@ if __name__ == "__main__":
         player_configs=[
             config_classes.player_config(
                 initial_direction=0,
-                initial_velocity=5,
+                initial_velocity=15,
                 fleet=[
                     config_classes.ship_presets.large_ship(),
                     config_classes.ship_presets.small_ship(),
@@ -22,7 +22,7 @@ if __name__ == "__main__":
             ),
             config_classes.player_config(
                 initial_direction=3.14,
-                initial_velocity=5,
+                initial_velocity=15,
                 fleet=[
                     config_classes.ship_presets.large_ship(),
                     config_classes.ship_presets.small_ship(),
@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
         ],
         world_radius=1e3,
-        asteroid_amount=10,
+        asteroid_amount=1000,
         asteroid_size_mean=100,
         asteroid_size_stddev=50,
     )
@@ -50,7 +50,9 @@ if __name__ == "__main__":
 
         # draw game
         screen.fill((0, 0, 0))
-        viewer.find_scale_offset(padding_percent=20)
+        viewer.find_scale_offset(padding_percent=0, view_whole_world=True)
+        print(viewer._camera)
+        #viewer._camera = (0.2,(0,0))
         viewer.render_to_self()
         screen.blit(viewer.screen,(0,0))
         pygame.display.flip()

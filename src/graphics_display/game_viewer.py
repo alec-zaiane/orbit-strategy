@@ -79,10 +79,10 @@ class game_viewer:
             return False
         if view_whole_world:
             bounding_box = (
-                (-self.game.game_world.world_size / 2)*((1+padding_percent)/2),
-                (self.game.game_world.world_size / 2)*((1+padding_percent)/2),
-                (-self.game.game_world.world_size / 2)*((1+padding_percent)/2),
-                (self.game.game_world.world_size / 2)*((1+padding_percent)/2)
+                (-self.game.game_world.world_size)*((1+padding_percent/2)),
+                (self.game.game_world.world_size)*((1+padding_percent/2)),
+                (-self.game.game_world.world_size)*((1+padding_percent/2)),
+                (self.game.game_world.world_size)*((1+padding_percent/2))
             )
         else:
             bounding_box = self._find_bounding_box(filter_objects)

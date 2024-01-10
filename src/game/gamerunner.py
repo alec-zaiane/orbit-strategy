@@ -34,8 +34,8 @@ class game: # pylint: disable=too-few-public-methods
             random_offset_range = game_configuration.world_radius * 0.1
 
             start_velocity = vector2(
-                math.cos(player_config.initial_direction + math.pi / 2),
-                math.sin(player_config.initial_direction + math.pi / 2)
+                math.sin(player_config.initial_direction + math.pi / 2),
+                math.cos(player_config.initial_direction + math.pi / 2)
             ) * player_config.initial_velocity
             for ship_config in player_config.fleet:
                 # add a random offset to the spawn location
