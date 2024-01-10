@@ -150,7 +150,7 @@ class game_viewer:
                     self.screen,
                     col_to_draw,
                     draw_coords,
-                    (draw_coords[0] + math.cos(obj.rotation) * 5, draw_coords[1] + math.sin(obj.rotation) * 5)
+                    (draw_coords[0] - math.sin(obj.rotation) * 5, draw_coords[1] + math.cos(obj.rotation) * 5)
                 )
             else:
                 if isinstance(obj.collider, rect_collider):
@@ -175,9 +175,9 @@ class game_viewer:
                     # also draw a line in its pointing direction
                     pygame.draw.aaline(
                         self.screen,
-                        col_to_draw,
+                        (0,0,0),
                         draw_coords,
-                        (draw_coords[0] + math.cos(obj.rotation) * 5, draw_coords[1] + math.sin(obj.rotation) * 5)
+                        (draw_coords[0] - math.sin(obj.rotation) * 5, draw_coords[1] + math.cos(obj.rotation) * 5)
                     )
 
                 else:

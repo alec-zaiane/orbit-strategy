@@ -33,8 +33,8 @@ if __name__ == "__main__":
 
         ],
         world_radius=1e3,
-        asteroid_amount=1000,
-        asteroid_size_mean=100,
+        asteroid_amount=10,
+        asteroid_size_mean=10,
         asteroid_size_stddev=50,
     )
     game_instance = game(game_cfg)
@@ -50,9 +50,7 @@ if __name__ == "__main__":
 
         # draw game
         screen.fill((0, 0, 0))
-        viewer.find_scale_offset(padding_percent=0, view_whole_world=True)
-        print(viewer._camera)
-        #viewer._camera = (0.2,(0,0))
+        viewer.find_scale_offset(padding_percent=20, view_whole_world=True)
         viewer.render_to_self()
         screen.blit(viewer.screen,(0,0))
         pygame.display.flip()

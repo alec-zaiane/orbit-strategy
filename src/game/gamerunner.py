@@ -36,7 +36,7 @@ class game: # pylint: disable=too-few-public-methods
             start_velocity = vector2(
                 math.sin(player_config.initial_direction + math.pi / 2),
                 math.cos(player_config.initial_direction + math.pi / 2)
-            ) * player_config.initial_velocity
+            ) * (player_config.initial_velocity * -1)
             for ship_config in player_config.fleet:
                 # add a random offset to the spawn location
                 random_offset = vector2(
